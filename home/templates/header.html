@@ -1,0 +1,68 @@
+{% load static %}
+<header id="header">
+
+    <!-- top Header -->
+    <nav id="navbar_main" class="mobile-offcanvas navbar d-xl-block header-menu pt-3 pb-3">
+        <div class="container">
+            <div class="title d-flex">
+                <a class="my-auto" href="{% url 'base' %}">TITLE</a>
+            </div>
+            <div class="d-flex justify-content-end">
+                <ul class="header-btns">
+                    <li>
+                        <div class="header-search">
+                            <form action="/search/" method="post" id="search">
+                                {% csrf_token %}
+                                <input id="query" name="query" type="text" placeholder="Искать здесь...">
+                                <select name="catid"  class="input search-categories bg-secondary d-none">
+                                    <option value="0">Все категории</option>
+                                </select>
+                                <button type="submit">
+                                    <svg aria-hidden="true" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 32 32">
+                                        <path fill="#fff" d="M21.839 18.771a10.012 10.012 0 0 0 1.57-5.39c0-5.548-4.493-10.048-10.034-10.048-5.548 
+                                        0-10.041 4.499-10.041 10.048s4.493 10.048 10.034 10.048c2.012 0 3.886-.594 5.456-1.61l.455-.317 7.165 7.165 
+                                        2.223-2.263-7.158-7.165.33-.468zM18.995 7.767c1.498 1.498 2.322 3.49 2.322 5.608s-.825 4.11-2.322 5.608c-1.498 
+                                        1.498-3.49 2.322-5.608 2.322s-4.11-.825-5.608-2.322c-1.498-1.498-2.322-3.49-2.322-5.608s.825-4.11 2.322-5.608c1.498-1.498 
+                                        3.49-2.322 5.608-2.322s4.11.825 5.608 2.322z">
+                                        </path>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                    <!-- Account -->
+                    <li class="header-account">
+                        {% if user.id is not None %}
+                            <a href="{% url 'user_index' %}">
+                                <div type="button" class="header-account__align">
+                                    <i class="fa-solid fa-user fa-xl text-white"></i>
+                                </div>
+                            </a>
+                        {% else %}
+                            <div class="header-account__align">
+                                <a href="{% url 'login' %}" class="text-uppercase">Вход</a> / <a href="{% url 'signup' %}" class="text-uppercase">Регистрация</a>
+                            </div>
+                            
+                        {% endif %}
+                    </li>
+                    <!-- /Account -->
+                    {% if user.id is not None %}
+                    <!-- Cart -->
+                    <li class="header-cart">
+                        <a href="{% url 'shopcart' %}" >
+                            <div class="header-btns-icon">
+                                <i class="fa fa-shopping-cart fa-lg"></i>
+                                {% load myapptags %}
+                                {% shopcartcount user.id as count %}
+                                <span class="qty">{{ count }}</span>
+                            </div>
+                            <br>
+                        </a>
+                    </li>
+                    <!-- /Cart -->
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- container -->

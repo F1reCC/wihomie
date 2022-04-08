@@ -1,0 +1,125 @@
+{% load static %}
+<div class="sidebar-uppear-border"></div>
+    <!-- /category nav -->
+<nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-md header-menu pb-0 mb-0 mt-0 pt-0">
+    <div class="container">
+        <ul class="navbar-nav justify-content-end sidebar-custom-menu">
+            <li class="nav-item px-4"><a class="nav-link" href="{% url 'base' %}"> Главная </a></li>
+            <li class="nav-item px-4"><a class="nav-link" href="#"> Ремонт </a></li>
+            <li class="nav-item px-4"><a class="nav-link" href="{% url 'home' %}"> Магазин </a></li>
+            <li class="nav-item dropdown position-static px-4 scmd">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>Соревнования</span>
+                </a>
+                <!-- Dropdown menu -->
+                <div class="dropdown-menu w-100 mt-0" aria-labelledby="navbarDropdown" style="border-top-left-radius: 0; border-top-right-radius: 0;">
+                    <div class="container">
+                        <div class="row my-4">
+                            <div class="col-md-4 mb-4 mb-md-0">
+                            <a href="#" class="text-uppercase font-weight-bold">
+                                XC "Bazavluk Race"
+                            </a>
+                            <div class="bg-image shadow-1-strong rounded ripple mb-4">
+                                <img src="https://mdbootstrap.com/img/new/fluid/city/113.jpg" class="img-fluid"/>
+                                <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15 );"></div>
+                                </a>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <a href="" class="text-info"><i class="fas fa-plane pe-1"></i>Travels</a>
+                                <p><u>15.07.2020</u></p>
+                            </div>
+                            <a href="" class="text-dark">
+                                <h5>This is title of the news</h5>
+                                <p>
+                                Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit. Odit,
+                                iste aliquid. Sed id nihil magni,
+                                sint vero provident esse numquam
+                                perferendis ducimus dicta adipisci
+                                iusto nam temporibus modi animi
+                                laboriosam?
+                                </p>
+                            </a>
+                            </div>
+                            <div class="col-md-4 mb-4 mb-md-0">
+                            <a href="#"class="text-uppercase font-weight-bold">
+                                XC "Четыре тропы"
+                            </a>
+                            <div class="bg-image hover-overlay shadow-1-strong rounded ripple mb-4">
+                                <img src="https://mdbootstrap.com/img/new/fluid/city/011.jpg" class="img-fluid"/>
+                                <a href="#!">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15 );"></div>
+                                </a>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <a href="" class="text-danger"><i class="fas fa-chart-pie pe-1"></i>
+                                Business
+                                </a>
+                                <p><u>15.07.2020</u></p>
+                            </div>
+                            <a href="" class="text-dark">
+                                <h5>This is title of the news</h5>
+                                <p>
+                                Lorem ipsum dolor sit amet
+                                consectetur adipisicing elit. Odit,
+                                iste aliquid. Sed id nihil magni,
+                                sint vero provident esse numquam
+                                perferendis ducimus dicta adipisci
+                                iusto nam temporibus modi animi
+                                laboriosam?
+                                </p>
+                            </a>
+                            </div>
+                            <div class="col-md-4">
+                                <a href="#" class="text-uppercase font-weight-bold">
+                                    XC "Мясо"
+                                </a>
+                                <div class="bg-image hover-overlay shadow-1-strong rounded ripple mb-4">
+                                    <img src="https://mdbootstrap.com/img/new/fluid/city/018.jpg" class="img-fluid"/>
+                                    <a href="#!">
+                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15 );"></div>
+                                    </a>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <a href="" class="text-warning"><i class="fas fa-code pe-1"></i>Technology</a>
+                                    <p><u>15.07.2020</u></p>
+                                </div>
+                                <a href="" class="text-dark">
+                                    <h5>This is title of the news</h5>
+                                    <p>
+                                    Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. Odit,
+                                    iste aliquid. Sed id nihil magni,
+                                    sint vero provident esse numquam
+                                    perferendis ducimus dicta adipisci
+                                    iusto nam temporibus modi animi
+                                    laboriosam?
+                                    </p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item px-4"><a class="nav-link" href="#"> Новости </a></li>
+            <li class="nav-item px-4"><a class="nav-link" href="#"> Статьи </a></li>
+        </ul>
+    </div>
+</nav>
+</header>
+<div class="container-fluid">
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success'%}
+                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+            {% elif message.tags == 'info' %}
+                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+            {% elif message.tags == 'warning' %}
+                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+            {% elif message.tags == 'error' %}
+                <script type=text/javascript>toastr.{{ message.tags }}('{{ message }}')</script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+</div>

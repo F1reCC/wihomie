@@ -1,0 +1,119 @@
+{% extends 'user_home.html' %}
+{% load static %}
+{% block title %}  {{ user.first_name }} Profile {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block bg %} g-sidenav-show {% endblock %}
+{% block body %}
+
+<div class="user-bg">
+        {% include "user_panel.html" %}
+ 
+
+    <nav class="user-main navbar navbar-main navbar-expand-lg shadow-none border-radius-xl">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm"><a class="breadcrumb-opacity text-dark" href="{% url 'base' %">Главная</a></li>
+                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Просмотр профиля</li>
+                </ol>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
+                <div class="ms-md-auto d-none d-xl-flex px-2 d-flex align-items-center">
+                    <a href="{% url 'base' %}">
+                        <i class="fas fa-home text-dark"></i>
+                        <span class="d-sm-inline d-none text-dark">Главная</span>
+                    </a>
+                </div>
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item px-2 d-none d-xl-flex d-flex align-items-center">
+                        <a href="{% url 'home'}">
+                            <i class="fas fa-store text-dark"></i>
+                            <span class="d-sm-inline d-none text-dark">Магазин</span>
+                        </a>
+                    </li>
+                    <li class="nav-item px-2 d-none d-xl-flex d-flex align-items-center">
+                        <a href="{% url 'user_index' %}" class="nav-link text-body font-weight-bold px-0">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Профиль</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-xl-none ps-3 d-flex">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                        <div class="sidenav-toggler-inner">
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                        </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="user-main min-height-100 border-radius-lg">
+        <div class="container-fluid text-center">
+            <div class="page-header min-height-200 border-radius-xl mt-4" style="background-image: url({% static 'img/user-profile.jpg' %});">
+                <span class="mask bg-gradient-secondary opacity-6"></span>
+            </div>
+            <div class=" mx-3 mx-md-4 mt-n6">
+                <div class="row">
+
+                    <div class="col-lg-7 col-md-12">
+                        <div class="card card-body user-card-h100">
+                        
+                            <div class="user-details">
+                                <div class="section-title">
+                                    <h3 class="title">Информация пользователя</h3>
+                                </div>
+                            </div>
+                            
+                            <div class="user-fields d-flex flex-wrap justify-content-center">
+                                <div>
+                                    <p class="text-left">Имя:</p>
+                                    <span>{{ user.first_name }}</span>
+                                </div>
+                                <div>
+                                    <p class="text-left">Фамилия:</p>
+                                    <span>{{ user.last_name }}</span>
+                                </div>
+                                <div>
+                                    <p class="text-left">Электронный адрес:</p>
+                                    <span>{{ profile.user.email }}</span>
+                                </div>
+                                <div>
+                                    <p class="text-left">Телефон:</p>
+                                    <span>{{ profile.phone }}</span>
+                                </div>
+                                <div>
+                                    <p class="text-left">Город:</p>
+                                    <span>{{ profile.city }}</span>
+                                </div>
+                                <div>
+                                    <p class="text-left">Отделение почты:</p>
+                                    <span>{{ profile.address }}</span>
+                                </div>
+                            </div>
+                            <div class="position-absolute bottom-0 w-100 start-0">
+                                <a class="btn bg-red text-white w-100 mt-4" href="/user/update">Обновить информацию</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-12">
+                        <div class="card card-body user-card-h100">
+                            <div class="user-details">
+                                <div class="section-title">
+                                    <h3 class="title">Последние заказы</h3>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+{% endblock %}

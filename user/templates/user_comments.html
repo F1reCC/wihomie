@@ -1,0 +1,111 @@
+{% extends 'user_home.html' %}
+{% load static %}
+{% block title %} Комментарии пользователя {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block bg %} g-sidenav-show {% endblock %}
+
+{% block body %}
+<div class="user-bg">
+    {% include "user_panel.html" %}
+
+    <nav class="user-main navbar navbar-main navbar-expand-lg shadow-none border-radius-xl">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm"><a class="breadcrumb-opacity text-dark" href="{% url 'base' %">Главная</a></li>
+                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Комментарии пользователя</li>
+                </ol>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
+                <div class="ms-md-auto d-none d-xl-flex px-2 d-flex align-items-center">
+                    <a href="{% url 'base' %}">
+                        <i class="fas fa-home text-dark"></i>
+                        <span class="d-sm-inline d-none text-dark">Главная</span>
+                    </a>
+                </div>
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item px-2 d-none d-xl-flex d-flex align-items-center">
+                        <a href="{% url 'home'}">
+                            <i class="fas fa-store text-dark"></i>
+                            <span class="d-sm-inline d-none text-dark">Магазин</span>
+                        </a>
+                    </li>
+                    <li class="nav-item px-2 d-none d-xl-flex d-flex align-items-center">
+                        <a href="{% url 'user_index' %}" class="nav-link text-body font-weight-bold px-0">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Профиль</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-xl-none ps-3 d-flex">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                        <div class="sidenav-toggler-inner">
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                        </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="user-main min-height-100 border-radius-lg">
+        <div class="container-fluid">
+            <div class="mx-3 mx-md-4 mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card card-body order-card-h100">
+                            <div class="user-details">
+                                <div class="section-title">
+                                    <h3 class="title">Комментарии пользователя</h3>
+                                </div>
+                            </div>
+                            {% for rs in comments %}
+                                <div class="ibox">
+                                    <div class="ibox-title w-100 ">
+                                        <div class="d-flex flex-wrap justify-content-between">
+                                            <h5>
+                                                {% if rs.product.variant == 'Size' %}
+                                                    <a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.size }} </a>
+                                                {% elif rs.product.variant == 'Color' %}
+                                                    <a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.color } }</a>
+                                                {% elif rs.product.variant == 'Size-Color' %}
+                                                    <a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.size }} {{ rs.variant.color }} </a>
+                                                {% else %}
+                                                    <a href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} </a>
+                                                {% endif %}
+                                            </h5>
+                                            <div class="d-flex flex-wrap">
+                                                <div class="px-3">
+                                                    <div class="review-rating">
+                                                        <i class="{% if rs.rate < 1 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                        <i class="{% if rs.rate < 2 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                        <i class="{% if rs.rate < 3 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                        <i class="{% if rs.rate < 4 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                        <i class="{% if rs.rate < 5 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="px-3">
+                                                    <i class="fa-solid fa-clock"></i> {{ rs.create_at }} ({{ rs.get_status_display }})
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="text-left"><b>Комментарий:</b> {{ rs.comment }} </div>
+                                        <div class="text-left"><b>Плюсы:</b> {{ rs.comment_plus }} </div>
+                                        <div class="text-left"><b>Минусы:</b> {{ rs.comment_minus }} </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'homebase.html' %}
+
+{% block title %} Подробности заказа {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+
+{% block body %}
+
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-3">
+                    {% include "user_panel.html" %}
+                </div>
+
+                <div class="col-md-9">
+                    <div class="order-summary clearfix">
+                        <div class="section-title">
+                            <h3 class="title">Список заказов</h3>
+                        </div>
+
+                        <table class="shopping-cart-table table">
+                            <tr>
+                                <th class="text-left">№ </th>
+                                <th class="text-left">Наименование товара </th>
+                                <th class="text-left">Цена </th>
+                                <th class="text-left">Количество </th>
+                                <th class="text-left">Всего </th>
+                                <th class="text-left">Статус </th>
+                                <th class="text-left">Дата </th>
+                                <th class="text-left">Детали </th>
+                            </tr>
+                            {% for rs in order_product %}
+                                <tr>
+                                    <td class="text-left">
+                                        <a href="/product/{{ rs.product_id }}/{{ rs.product.slug }}">
+                                            {% if rs.variant.image_id > 0 %}
+                                                <img src="{{rs.variant.image }}" alt="" style="height: 80px">
+                                            {% else %}
+                                                <img src="{{rs.product.image.url}}" alt="" style="height: 80px">
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>{{ rs.product.title}} {{ rs.variant.size }}   {{ rs.variant.color }}</td>
+                                    <td class="text-left">{{ rs.price }} </td>
+                                    <td class="text-left">{{ rs.quantity }} </td>
+                                    <td class="text-left">{{ rs.amount }} </td>
+                                    <td class="text-left">{{ rs.status }} </td>
+                                    <td class="text-left">{{ rs.create_at }} </td>
+                                    <td class="text-left"><a class="primary-btn" href="/user/order_product_detail/{{ rs.id }}/{{ rs.order.id}}"> Подбробнее </a></td>
+
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}

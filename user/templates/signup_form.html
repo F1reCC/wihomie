@@ -1,0 +1,123 @@
+{% extends 'user_home.html' %}
+{% load static %}
+{% block title %} Регистрация пользователя  {{ setting.title }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block bg %} body-white {% endblock %}
+{% block body %}
+<div class="container position-sticky z-index-sticky top-0 bg-gray-200">
+    <div class="row">
+        <div class="col-12">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
+                <div class="container-fluid ps-2 pe-0">
+                    <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="{% url 'base' %}">
+                        TITLE
+                    </a>
+                    <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon mt-2">
+                        <span class="navbar-toggler-bar bar1"></span>
+                        <span class="navbar-toggler-bar bar2"></span>
+                        <span class="navbar-toggler-bar bar3"></span>
+                        </span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navigation">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link me-2" href="{% url 'login' %}">
+                                <i class="fas fa-user-circle opacity-6 text-dark me-1" style="font-size: 16px"></i>
+                                Авторизация
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-2" href="{% url 'signup' %}">
+                                <i class="fas fa-key opacity-6 text-dark me-1"></i>
+                                Регистрация
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav d-lg-block d-none">
+                            <li class="nav-item">
+                                <a class="nav-link me-2" href="{% url 'base' %}">
+                                <i class="fa fa-home opacity-6 text-dark me-1" style="font-size: 18px"></i>
+                                Главная
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+        </div>
+    </div>
+</div>
+<main class="main-content  mt-0">
+    <section>
+      <div class="page-header min-vh-100">
+        <div class="container">
+          <div class="row">
+            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
+              <div class="position-relative bg-gradient-danger h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" style="background-image: url('/static/img/bg-signup.jpg'); background-size: cover; background-position-x: center;">
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
+              <div class="card border-0 card-plain">
+                <div class="card-header border-0 bg-none">
+                  <h4 class="font-weight-bolder">Регистрация</h4>
+                  <p class="mb-0">Укажите данные для регистрации</p>
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'signup' %}" method="post">
+                        {% csrf_token %}
+
+                        {% if form.errors %}
+                        <div class="alert alert-danger alert-dismissible fade show mt-3">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+                        {{ form.errors }}
+
+                        <div class="input-group input-group-outline mb-3">
+                            {{ form.username }}
+                        </div>
+                        <div class="input-group input-group-outline mb-3">
+                            {{ form.email }}
+                        </div>
+                        <div class="input-group input-group-outline mb-3">
+                            {{ form.first_name }}
+                        </div>
+                        <div class="input-group input-group-outline mb-3">
+                            {{ form.last_name }}
+                        </div>
+                        
+                        <div class="input-group input-group-outline mb-3">
+                            {{ form.password1 }}
+                        </div>
+                        <div class="text-start">
+                            <small id="hint_id_password1" class="form-text text-muted"><ul><li>Пароль не должен быть слишком похож на другую вашу личную информацию.</li><li>Ваш пароль должен содержать как минимум 8 символов.</li><li>Пароль не должен быть слишком простым и распространенным.</li><li>Пароль не может состоять только из цифр.</li></ul></small>
+                        </div>
+                        <div class="input-group input-group-outline mb-3">
+                            {{ form.password2 }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-lg bg-gradient-danger btn-lg w-100 mt-4 mb-0"> Подтвердить </button>
+                        </div>  
+                    </form>
+                </div>
+                <div class="card-footer text-center pt-0 px-lg-2 px-1 bg-none">
+                  <p class="mb-2 text-sm mx-auto">
+                    Уже зарегистрирован?
+                    <a href="{% url 'login' %}" class="text-danger text-gradient font-weight-bold">Войти</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+{% endblock %}
+{% block head %}
+{% endblock %}

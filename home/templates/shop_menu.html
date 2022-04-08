@@ -1,0 +1,15 @@
+{% load myapptags %}
+
+{% categoryTree 0 '' as category_menu %}
+
+
+<header>
+    <nav class="dws-menu">
+        <input type="checkbox" name="toggle" id="menu" class="toggleMenu">
+        <label for="menu" class="toggleMenu"><i class="fa fa-bars"></i>Категории</label>
+        <ul>
+            {{ category_menu | safe }}
+        </ul>
+    </nav>
+</header>
+

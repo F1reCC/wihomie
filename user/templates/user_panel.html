@@ -1,0 +1,63 @@
+<aside class="sidenav dark-menu fixed-start">
+    <div class="w-100">
+        <div class="user-menu__title mx-auto w-100">
+            <div>
+                <i class="fa-solid fa-id-card fa-2x text-white"></i>
+            </div>
+            <h5 class="px-3 my-auto text-center font-weight-bold text-white">Панель профиля</h5>
+        </div>
+        <hr>
+        <div>
+            <ul class="user-menu__cat">
+                <li>
+                    <a href="/user" class="{% if request.path == '/user/' %} active {% endif %}">
+                        <div>
+                            <i class="fa fa-user text-white"></i>
+                        </div> 
+                        <span>Профиль</span> 
+                    </a>
+                </li>
+                <li>
+                    <a href="/user/orders" class="{% if request.path == '/user/orders/' %} active {% endif %}">
+                        <div>
+                            <i class="fa-solid fa-clipboard-list text-white"></i>
+                        </div>
+                        <span>Мои заказы</span> 
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/user/comments" class="{% if request.path == '/user/comments/' %} active {% endif %}">
+                        <div>
+                            <i class="fa-solid fa-comment-dots text-white"></i>
+                        </div>
+                        
+                        <span>Мои комментарии</span> 
+                    </a>
+                </li>
+                <li>
+                    <a href="/user/update" class="{% if request.path == '/user/update/' %} active {% endif %}">
+                        <div>
+                            <i class="fa-solid fa-gear text-white"></i>
+                        </div>
+                        
+                        <span>Настройки</span> 
+                    </a>
+                </li>
+                <li>
+                    <a href="/logout">
+                        <div>
+                            <i class="fa-solid fa-right-from-bracket text-white"></i>
+                        </div>
+                        <span>Выйти</span> 
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+            <div class="mx-3">
+              <a class="btn bg-red text-white mt-4 w-100" href="{% url 'base' %}" type="button">Вернуться на сайт</a>
+            </div>
+        </div>
+    </div>
+</aside>

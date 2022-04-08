@@ -1,0 +1,169 @@
+{% extends 'user_home.html' %}
+{% load static %}
+{% block title %} Просмотр заказа {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+{% block bg %} g-sidenav-show {% endblock %}
+
+
+{% block body %}
+<div class="user-bg">
+    {% include "user_panel.html" %}
+
+
+    <nav class="user-main navbar navbar-main navbar-expand-lg shadow-none border-radius-xl">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm"><a class="breadcrumb-opacity text-dark" href="{% url 'base' %">Главная</a></li>
+                    <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Просмотр профиля</li>
+                </ol>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4 justify-content-end" id="navbar">
+                <div class="ms-md-auto d-none d-xl-flex px-2 d-flex align-items-center">
+                    <a href="{% url 'base' %}">
+                        <i class="fas fa-home text-dark"></i>
+                        <span class="d-sm-inline d-none text-dark">Главная</span>
+                    </a>
+                </div>
+                <ul class="navbar-nav justify-content-end">
+                    <li class="nav-item px-2 d-none d-xl-flex d-flex align-items-center">
+                        <a href="{% url 'home'}">
+                            <i class="fas fa-store text-dark"></i>
+                            <span class="d-sm-inline d-none text-dark">Магазин</span>
+                        </a>
+                    </li>
+                    <li class="nav-item px-2 d-none d-xl-flex d-flex align-items-center">
+                        <a href="{% url 'user_index' %}" class="nav-link text-body font-weight-bold px-0">
+                            <i class="fa fa-user me-sm-1"></i>
+                            <span class="d-sm-inline d-none">Профиль</span>
+                        </a>
+                    </li>
+                    <li class="nav-item d-xl-none ps-3 d-flex">
+                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+                        <div class="sidenav-toggler-inner">
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                            <i class="sidenav-toggler-line"></i>
+                        </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="user-main min-height-100 border-radius-lg">
+        <div class="container-fluid text-center">
+            <div class="mx-0 mx-md-4 mt-4">
+                <div class="row">
+                    <div class="col">
+                        <div class="card card-body order-detail-h100">
+                            <div class="user-details">
+                                <div class="section-title">
+                                    <h3 class="title">Детали заказа</h3>
+                                </div>
+                            </div>
+                            <div class="user-order-details">
+                                <p class="text-left">Имя: <b>{{ order.first_name }}</b></p>
+                                <p class="text-left">Фамилия: <b>{{ order.last_name }}</b></p>
+                                <p class="text-left">Телефон: <b>{{ order.phone }}</b></p>
+                                <p class="text-left">Город: <b>{{ order.city }}</b></p>
+                                <p class="text-left">Отделение новой почты: <b>{{ order.address }}</b></p>
+                                <p class="text-left">Статус: <b>{{ order.get_status_display }}</b></p>
+                                <p class="text-left">Дата оформления заказа: <b>{{ order.create_at }}</b></p>
+                            </div>
+
+
+                            <div class="user-details mt-3">
+                                <div class="section-title">
+                                    <h3 class="title">Список товаров</h3>
+                                </div>
+                            </div>
+                            <table class="shopping-cart-table table user-details-table">
+                                <tr>
+                                    <th class="text-left">№ </th>
+                                    <th class="text-left">Изображение </th>
+                                    <th class="text-left">Наиметование товара </th>
+                                    <th class="text-left">Цена </th>
+                                    <th class="text-left">Количество </th>
+                                    <th class="text-left">Всего </th>
+                                </tr>
+                                {% for rs in orderitems %}
+                                    <tr>
+                                        <td class="text-left">{{ rs.id }} </td>
+                                        <td class="text-left">
+                                            <a>
+                                                {% if rs.variant.image_id > 0 %}
+                                                    <img src="{{rs.variant.image }}" alt="">
+                                                {% else %}
+                                                    <img src="{{rs.product.image.url}}" alt="">
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {% if rs.product.variant == 'Size' %}
+                                                {{rs.product}} {{ rs.variant.size }}
+                                            {% elif rs.product.variant == 'Color' %}
+                                                {{rs.product}} {{ rs.variant.color }}
+                                            {% elif rs.product.variant == 'Size-Color' %}
+                                                {{rs.product}} {{ rs.variant.size }} {{ rs.variant.color }}
+                                            {% else %}
+                                                {{rs.product}}
+                                            {% endif %}
+                                        </td>
+                                        
+                                        <td class="text-left">{{ rs.price }} </td>
+                                        <td class="text-left">{{ rs.quantity }} </td>
+                                        <td class="text-left">{{ rs.amount }} </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                            <div class="d-lg-none order-detail">
+                                {% for rs in orderitems %}
+                                    <table class="table-s order-detail__mobile mx-auto">
+                                        <tbody>
+                                            <tr>
+                                                <td class="my-auto">
+                                                    <div class="table-img">
+                                                        {% if rs.variant.image_id > 0 %}
+                                                            <img src="{{rs.variant.image }}" alt="">
+                                                        {% else %}
+                                                            <img src="{{rs.product.image.url}}" alt="">
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                                <td class="my-auto">  
+                                                    {% if rs.product.variant == 'Size' %}
+                                                        {{rs.product}} {{ rs.variant.size }}
+                                                    {% elif rs.product.variant == 'Color' %}
+                                                        {{rs.product}} {{ rs.variant.color }}
+                                                    {% elif rs.product.variant == 'Size-Color' %}
+                                                       {{rs.product}} {{ rs.variant.size }} {{ rs.variant.color }}
+                                                    {% else %}
+                                                        {{rs.product}}
+                                                    {% endif %}
+                                                    <p class="small">
+                                                        {{ rs.quantity }} шт.
+                                                    </p>
+                                                </td>
+                                                <td class="my-auto">
+                                                    <b>
+                                                        {{ rs.amount }}0
+                                                        грн.
+                                                    </b>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

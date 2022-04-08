@@ -1,0 +1,151 @@
+{% extends 'homebase.html' %}
+{% block title %} Оформление заказа {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+
+    <!-- BREADCRUMB -->
+    <div aria-label="breadcrumb" class="pt-3">  
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Магазин</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Оформление заказа</li>
+            </ol>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Оформление заказа</h5>
+                            </div>
+
+                            <div class="ibox-content">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <div class="billing-details">
+                                        <p><label for="id_first_name" class="form-label">Имя*:</label>
+                                            <input type="text" name="first_name"  value="{{ user.first_name }}" class="form-control" maxlength="20" required id="id_first_name"></p>
+                                        <p><label for="id_last_name" class="form-label">Фамилия*:</label>
+                                            <input type="text" name="last_name"  value="{{ user.last_name }}" class="form-control" maxlength="20" required id="id_last_name"></p>
+                                        <p><label for="id_phone" class="form-label">Телефон*:</label>
+                                            <input type="text" name="phone"  value="{{ profile.phone }}"  class="form-control" maxlength="10" id="id_phone"></p>
+                                        <div class="text-start">
+                                            <small id="hint_id_password1" class="form-text text-muted"><ul><li>Номер телефона указывается без кода страны.</li><li>Формат ввода 0631234567.</li></ul></small>
+                                        </div>
+                                        <p><label for="id_buying_type">Вид доставки*:</label>
+                                            <select name="buying_type" class="select form-select" id="id_buying_type">
+                                                <option value selected>---------</option>
+                                                <option value="new_mail">Доставка Новой почтой</option>
+                                                <option value="ukr_mail">Наложенный платёж</option>
+                                                <option value="self">Самовывоз</option>
+                                        </select></p>
+                                        <p><label for="id_city" class="form-label">Город*:</label>
+                                            <input type="text" name="city"  value="{{ profile.city }}"  class="form-control" maxlength="20" id="id_сity"></p>
+                                        <p><label for="id_address" class="form-label">Отделение почты*:</label>
+                                            <input type="text" name="address" value="{{ profile.address }}" class="form-control" maxlength="150" id="id_address"></p>
+                                        <p><label for="id_address">Вид оплаты*:</label>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="paying_type" value="card" id="id_paying_type_1"><label class="form-check-label" for="id_paying_type_1">Безналичный расчёт</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="paying_type" value="cod" id="id_paying_type_2"><label class="form-check-label" for="id_paying_type_2">Наложенный платёж</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input" name="paying_type" value="cash" id="id_paying_type_3"><label class="form-check-label" for="id_paying_type_3">Наличными</label>
+                                            </div>
+                                        </p>
+                                        <p>
+                                            <div id="div_id_comment" class="mb-3"> 
+                                                <label for="id_comment" class="form-label">Комментарий:</label>
+                                                <textarea name="comment" cols="40" rows="10" class="textarea form-control" id="id_comment"></textarea> 
+                                            </div>
+                                        </p>
+                                        <p><label for="save_address"><input type="checkbox" name="save_address" id="save_address">Сохранить данные о доставке?</label></p>
+                                        <div class="ibox-content">
+                                            <button type="sumbit" class="btn btn-red pull-right" class="text-white"><i class="fa fa fa-shopping-cart"></i>Подтвердить заказ</a></button>
+                                            <button class="btn btn-white"><a href="{% url 'home' %}"><i class="fa fa-arrow-left"></i>Вернуться в корзину</a></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Товары в корзине</h5>
+                            </div>
+                            {% for rs in shopcart %}
+                            <div class="ibox-content">
+                                <div class="table-responsive">
+                                    <table class="table shoping-cart-table">
+                                        <tbody>
+                                        <tr class="w-100">
+                                            <td colspan="2">
+                                                {% if rs.product.variant == 'Size' %}
+                                                    <a class="text-dark" href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.size }}</a>
+                                                {% elif rs.product.variant == 'Color' %}
+                                                    <a class="text-dark" href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.color }}</a>
+                                                {% elif rs.product.variant == 'Size-Color' %}
+                                                    <a class="text-dark" href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.size }} {{ rs.variant.color }}</a>
+                                                {% else %}
+                                                    <a class="text-dark" href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}}</a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                
+                                                {{ rs.amount }}
+                                                
+                                                грн.
+                                            </td>
+                                            <td>
+                                                {{ rs.quantity }} шт.
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+            
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Подсчёт корзины</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <span>
+                                    Всего
+                                </span>
+                                <h2 class="font-bold">
+                                    {{ total }} грн.
+                                </h2>
+            
+                                <hr>
+                                <span class="text-muted small">
+                                    *For United States, France and Germany applicable sales tax will be applied
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}

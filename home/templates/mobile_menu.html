@@ -1,0 +1,95 @@
+{% load static %}
+ <!-- OPEN MOBILE MENU -->
+ <div class="container-fluid" style="padding: 0 !important">
+            
+    <span class="screen-darken"></span>
+    
+    <div class="d-lg-none navbar" id="mobile_menu"  style="background-color: #222;">
+        
+        <!-- OPEN MOBILE MENU-->
+        <nav id="navbar_main" class="offcanvase-hidden mobile-offcanvas navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <div class="offcanvas-header">  
+                    <button class="btn-close float-end"></button>
+                    <a class="navbar-brand" href="#"><img src="{% static 'img/logo.png' %}" class="d-inline-block align-top" alt=""></a>
+                    <ul class="navbar-nav ms-auto">
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="nav-item"><a class="nav-link" href="#"> Главная </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="nav-item"><a class="nav-link" href="#"> Ремонт </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="nav-item"><a class="nav-link" href="#"> Магазин </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link  dropdown-toggle" href="#" data-bs-toggle="dropdown"> Соревнования </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">ХС "Bazavluk Race"</a></li>
+                                <li><a class="dropdown-item" href="#">XC "Четыре тропы"</a></li>
+                                <li><a class="dropdown-item" href="#">XC "Мясо"</a></li>
+                            </ul>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="nav-item"><a class="nav-link" href="#"> Контакты </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li class="nav-item"><a class="nav-link" href="#"> Справочник </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                    </ul>
+                </div>
+            </div>
+        </nav> <!-- END OPEN MOBILE MENU-->
+
+        <button data-trigger="navbar_main" class="btn navbar-dark d-block" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="title d-flex">
+            <a class="my-auto" href="{% url 'base' %}">TITLE</a>
+        </div>
+        <div class="text-center navbar">
+            <div class="p-2">
+                <ul class="navbar-nav header-btns ms-auto">
+                    <li class="nav-item">
+                        <div class="header-search">
+                            <svg aria-hidden="true" width="28px" height="28px" focusable="false" role="presentation" class="icon icon-search" viewBox="0 0 32 32">
+                                <path fill="#fff" d="M21.839 18.771a10.012 10.012 0 0 0 1.57-5.39c0-5.548-4.493-10.048-10.034-10.048-5.548 
+                                0-10.041 4.499-10.041 10.048s4.493 10.048 10.034 10.048c2.012 0 3.886-.594 5.456-1.61l.455-.317 7.165 7.165 
+                                2.223-2.263-7.158-7.165.33-.468zM18.995 7.767c1.498 1.498 2.322 3.49 2.322 5.608s-.825 4.11-2.322 5.608c-1.498 
+                                1.498-3.49 2.322-5.608 2.322s-4.11-.825-5.608-2.322c-1.498-1.498-2.322-3.49-2.322-5.608s.825-4.11 2.322-5.608c1.498-1.498 
+                                3.49-2.322 5.608-2.322s4.11.825 5.608 2.322z">
+                                </path>
+                            </svg>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="p-2">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item header-btns header-account header-account__align">
+                        {% if user.id is not None %}
+                        <a href="{% url 'user_index' %}"><i class="fa-solid fa-user fa-xl text-white"></i></a>
+                        {% else %}
+                        <div class="header-account__min">
+                            <a href="{% url 'login' %}"><i class="fa fa-sign-in pe-3" aria-hidden="true"></i></a>
+                            <a href="{% url 'signup' %}"><i class="fa fa-user-plus" aria-hidden="true"></i></a>
+                        </div>
+                        {% endif %}
+                    </li>
+                </ul>
+            </div>
+            <div class="p-2">
+                <ul class="navbar-nav header-btns-mobile ms-auto my-auto">
+                    <li class="nav-item header-cart">
+                        <a href="{% url 'shopcart' %}" >
+                            <div class="header-btns-icon">
+                                <i class="fa fa-shopping-cart fa-xl"></i>
+                                {% load myapptags %}
+                                {% shopcartcount user.id as count %}
+                                <span class="qty">{{ count }}</span>
+                            </div>
+                            <br>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- END MOBILE MENU -->

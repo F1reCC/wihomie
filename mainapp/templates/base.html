@@ -1,0 +1,72 @@
+{% extends 'homebase.html' %}
+{% block title %} Главная страница {{ setting.title }} {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+{% load static %}
+{% block body %}
+
+    <div class="banner-area">
+        <div class="single-banner">
+            <div class="banner-img">
+                <img src="{% static 'img/slider1.jpg' %}" alt="">
+            </div>
+            <div class="banner-text">
+                <h2>Text Subject</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Numquam accusamus ratione modi in? Culpa similique reiciendis voluptates sunt 
+                    blanditiis iste enim quos officia sed, quibusdam maxime debitis ut et ratione.</p>
+                <p class="banner-btn"><a href="#">BUTTON</a></p>
+            </div>
+        </div>
+        <div class="single-banner">
+            <div class="banner-img">
+                <img src="{% static 'img/slider2.png' %}" alt="">
+            </div>
+            <div class="banner-text">
+                <h2>Text Subject1</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Numquam accusamus ratione modi in? Culpa similique reiciendis voluptates sunt 
+                    blanditiis iste enim quos officia sed, quibusdam maxime debitis ut et ratione.</p>
+                <p class="banner-btn"><a href="#">BUTTON</a></p>
+            </div>
+        </div>
+        <div class="single-banner">
+            <div class="banner-img">
+                <img src="{% static 'img/slider1.jpg' %}" alt="">
+            </div>
+            <div class="banner-text">
+                <h2>Text Subject2</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Numquam accusamus ratione modi in? Culpa similique reiciendis voluptates sunt 
+                    blanditiis iste enim quos officia sed, quibusdam maxime debitis ut et ratione.</p>
+                <p class="banner-btn"><a href="#">BUTTON</a></p>
+            </div>
+        </div>
+        <div class="single-banner">
+            <div class="banner-img">
+                <img src="{% static 'img/slider2.jpg' %}" alt="">
+            </div>
+            <div class="banner-text">
+                <h2>Text Subject3</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                    Numquam accusamus ratione modi in? Culpa similique reiciendis voluptates sunt 
+                    blanditiis iste enim quos officia sed, quibusdam maxime debitis ut et ratione.</p>
+                <p class="banner-btn"><a href="#">BUTTON</a></p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('.banner-area').slick({
+            autoplay: true,
+            speed: 700,
+            arrows: false,
+            dots: true,
+            fade: true
+        })
+    </script>
+{% endblock js %}

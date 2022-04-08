@@ -1,0 +1,36 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block title %} Заказ оформлен {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="order-wrapper d-flex">
+                    <div class="col">
+                        <div class="order-text text-center my-auto w-100">
+                            <i class="fa-solid fa-square-check"></i>
+                            <h2>Заказ принят в обработку!</h2>
+                            <h2>Номер вашего заказа: {{ order.code }}</h3>
+                        </div>    
+                    </div>         
+                    <div class="col">
+                        <img src="{% static 'img/order_completed.jpg' %}" class="img-fluid" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}

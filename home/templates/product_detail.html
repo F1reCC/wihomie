@@ -1,0 +1,471 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block title %} {{ product.title }} {% endblock %}
+{% block description %} {{ product.description }} {% endblock %}
+{% block keywords %} {{ product.keywords }} {% endblock %}
+
+{% block shop_menu %}{% include 'shop_menu.html' %}{% endblock %}
+{% block body %}
+    <!-- section -->
+    <div class="section" style="padding-top: 30px; background-color: #fff">
+        <div class="container-fluid">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row" style="--bs-gutter-x: 1rem !important;">
+                    <!--  Product Details -->
+                    <div class="col-12 bg-product">
+                        <div class="row" style="--bs-gutter-x: 0rem !important">
+                            <div class="col-12">
+                                <div class="product product-details clearfix row">
+                                    <div class="row" style="--bs-gutter-x: 0 !important">
+                                        <!-- BREADCRUMB -->
+                                        <div aria-label="breadcrumb">  
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item"><a href="{% url 'home' %}">Магазин</a></li>
+                                                <li class="breadcrumb-item"><a href="{{ product.category.parent.get_absolute_url }}">{{ product.category.parent.title }}</a></li>
+                                                <li class="breadcrumb-item"><a href="{{ product.category.get_absolute_url }}">{{ product.category.title }}</a></li>
+                                                <li class="breadcrumb-item active" aria-current="page">{{ product.title }}</li>
+                                            </ol>
+                                        </div>
+                                        <!-- /BREADCRUMB -->
+                                        <div class="col-md-12 col-lg-6">
+                                                <div id="jssor_1" class="jssorc_1">
+                                                    <!-- Loading Screen -->
+                                                    <div data-u="loading" class="jssorl-009-spin jssorc_2">
+                                                        <img class="jssorc_img1" src="img/spin.svg" />
+                                                    </div>
+                                                    
+                                                    
+                                                    <div data-u="slides" class="jssorc_3">
+
+                                                        <div>
+                                                            <img data-u="image" src="{{ product.image.url }}">
+                                                            <img data-u="thumb" src="{{ product.image.url }}" style="width: 190px; height: 90px" />
+                                                        </div>
+                                                        {% if images %}
+                                                            {% for rs in images %}
+                                                                <div>
+                                                                    <img data-u="image" src="{{ rs.image.url }}" />
+                                                                    <img data-u="thumb" src="{{ rs.image.url }}" style="width: 190px; height: 90px" />
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </div>
+                                                    
+                                                    {% if images %}
+                                                    <!-- Thumbnail Navigator -->
+                                                    <div data-u="thumbnavigator" class="jssort101 jssorc_4" data-autocenter="1" data-scale-bottom="0.75">
+                                                        <div data-u="slides">
+                                                            <div data-u="prototype" class="p" style="width:190px;height:90px;">
+                                                                <div data-u="thumbnailtemplate" class="t"></div>
+                                                                <svg viewbox="0 0 16000 16000" class="cv">
+                                                                    <circle class="a" cx="8000" cy="8000" r="3238.1"></circle>
+                                                                    <line class="a" x1="6190.5" y1="8000" x2="9809.5" y2="8000"></line>
+                                                                    <line class="a" x1="8000" y1="9809.5" x2="8000" y2="6190.5"></line>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Arrow Navigator -->
+                                                    <div data-u="arrowleft" class="jssora106 jssorc_arrow1" data-scale="0.75">
+                                                        <svg viewbox="0 0 16000 16000">
+                                                            <circle class="c" cx="8000" cy="8000" r="6260.9"></circle>
+                                                            <polyline class="a" points="7930.4,5495.7 5426.1,8000 7930.4,10504.3 "></polyline>
+                                                            <line class="a" x1="10573.9" y1="8000" x2="5426.1" y2="8000"></line>
+                                                        </svg>
+                                                    </div>
+                                                    <div data-u="arrowright" class="jssora106 jssorc_arrow2" data-scale="0.75">
+                                                        <svg viewbox="0 0 16000 16000">
+                                                            <circle class="c" cx="8000" cy="8000" r="6260.9"></circle>
+                                                            <polyline class="a" points="8069.6,5495.7 10573.9,8000 8069.6,10504.3 "></polyline>
+                                                            <line class="a" x1="5426.1" y1="8000" x2="10573.9" y2="8000"></line>
+                                                        </svg>
+                                                    </div>
+                                                    {% endif %}
+                                            
+                                                </div>
+                                                <!-- #endregion Jssor Slider End -->
+                                                
+                                        </div>
+                                        <div class="col-md-12 col-lg-6">
+                                            <div class="product-body">
+                                                <h1 class="product-name px-3">{{ product.title }}</h1>
+                                                <div class="w-100 btn-group justify-content-between">
+                                                    <h3 class="product-price px-3 mb-3 mt-3">{{ product.price }} грн.</h3>
+                                                    <div class="product-rating my-auto">
+                                                        <i class="{% if product.avaregereview < 1 %}fa-regular{% else %} fa-custom{% endif %} fa-star"></i>
+                                                        <i class="{% if product.avaregereview < 2 %}fa-regular{% else %} fa-custom{% endif %} fa-star"></i>
+                                                        <i class="{% if product.avaregereview < 3 %}fa-regular{% else %} fa-custom{% endif %} fa-star"></i>
+                                                        <i class="{% if product.avaregereview < 4 %}fa-regular{% else %} fa-custom{% endif %} fa-star"></i>
+                                                        <i class="{% if product.avaregereview < 5 %}fa-regular{% else %} fa-custom{% endif %} fa-star"></i>
+                                                        {{ product.avaregereview | stringformat:".2f"}}
+                                                    
+                                                        <a href="#tab1"> ({{ product.countreview }})  Отзывы</a>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="product-btns">
+                                                    <div class="row">
+                                                        {% if product.variant == 'Size-Color' %}
+                                                            <div class="product-options">
+                                                                <div class="size-option">
+                                                                    <form method="POST" id="post-form">
+                                                                        <input type="hidden" name="productid" id="productid" value="{{ product.id }}">
+                                                                        <span class="text-uppercase">Размер :</span>
+                                                                        {% csrf_token %}
+                                                                        <select name="size" id="size">
+                                                                            {% for rs in sizes %}
+                                                                                <option {% if variant.size_id == rs.size_id %} selected {% endif %} value="{{ rs.size_id }}">{{ rs.size.name }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </form>
+                                                                </div>
+                    
+                                                                <form method="post" action="?q=selectvariant" id="post-color">
+                                                                    {% csrf_token %}
+                                                                    <div id="appendHere">
+                                                                        <input type="hidden" name="size" id="size" value="{{ size_id }}">
+                                                                        <ul class="color-option" >
+                                                                            <li><span class="text-uppercase">Цвет:</span></li>
+                                                                            {% for rs in colors %}
+                                                                                <input type="radio"  {% if variant.id == rs.id %} checked {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+                                                                                <li  {% if variant.id == rs.id %} class="active" {% endif %}>
+                                                                                    <a style="background-color:{{ rs.color.code }} !important; height: 30px; width: 30px">
+                                                                                    </a>
+                                                                                </li>
+                                                                            {% endfor %}
+                                                                        </ul>
+                                                                    </div>
+                                                                </form>
+                                                                <form action="/order/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
+                                                                    
+                                                                        <div class="qty">
+                                                                            <p class="text-start">Количество</p>
+                                                                            <div class="option-wrapper">
+                                                                                <input class="input" name="quantity" type="number" value="1" min="1" max="{{ variant.quantity }}">
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <div class="qty position-relative">
+                                                                            <p class="text-start">В наличии</p>
+                                                                            <div class="option-wrapper border-wrapper position-absolute w-100 d-flex justify-content-start px-2">
+                                                                                <p class="my-auto">{{ variant.quantity }} шт.</p>
+                                                                            </div>
+                                                                        </div>
+                                                            
+                                                                        {% if variant.quantity < 1  %}
+                                                                            <button type="submit" class="danger-btn add-to-cart mt-3">
+                                                                                <i class="fa fa-shopping-cart"></i> Нет в наличии
+                                                                            </button>
+                                                                        {% else %}
+                                                                            <button type="submit" class="primary-btn w-100 add-to-cart mt-3">
+                                                                                <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                                                                            </button>
+                                                                        {% endif %}
+                                                                </form>
+                                                            </div>
+                                                        {% elif product.variant == 'Size' %}
+                                                            <div class="product-options" >
+                                                                <form action="/order/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
+                                                                    <div class="color-option d-inline-flex mb-3">
+                                                                        <div>
+                                                                            <p class="text-start">Размер</p>
+                                                                            <div class="option-wrapper">
+                                                                                <select name="size" id="size">
+                                                                                    {% for rs in sizes %}                                  
+                                                                                        <option name="size" value="{{ rs.id }}">{{ rs.size.name }}</option>
+                                                                                    {% endfor %}
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="qty">
+                                                                        <p class="text-start">Количество</p>
+                                                                        <div class="option-wrapper">
+                                                                            <input class="input" name="quantity" type="number" value="1" min="1" max="{{ variant.quantity }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    <div class="qty position-relative">
+                                                                        <p class="text-start">В наличии</p>
+                                                                        <div class="option-wrapper border-wrapper position-absolute w-100 d-flex justify-content-start px-2">
+                                                                            <p class="my-auto">{{ variant.quantity }} шт.</p>
+                                                                        </div>
+                                                                    </div>
+                                                        
+                                                                    {% if variant.quantity < 1  %}
+                                                                        <button type="submit" class="danger-btn add-to-cart mt-3">
+                                                                            <i class="fa fa-shopping-cart"></i> Нет в наличии
+                                                                        </button>
+                                                                    {% else %}
+                                                                        <button type="submit" class="primary-btn w-100 add-to-cart mt-3">
+                                                                            <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                                                                        </button>
+                                                                    {% endif %}
+                                                                </form>
+                                                            </div>
+                                                        {% elif product.variant == 'Color' %}
+                                                            <div class="product-options" > 
+                                                                <form method="post" action="?q=selectvariant" id="post-color">
+                                                                    {% csrf_token %}
+                                                                    <div id="appendHere">
+                                                                        <input type="hidden" name="size" id="size" value="{{ size_id }}">
+                                                                        <div class="color-option d-inline-flex mb-3">
+                                                                            <div>
+                                                                                <p class="text-start">Цвет</p>
+                                                                                <div class="option-wrapper border-wrapper">
+                                                                                    {% for rs in colors %}
+                                                                                    <button style="width: 30px; height:30px; background-color:{{ rs.color.code }} !important;" {% if variant.id == rs.id %} checked class="active" {% endif %} name="variantid" id="variantid" value="{{ rs.id }}" onchange="this.form.submit();">
+                                                                                    </button>
+                                                                                    {% endfor %}
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                                <form action="/order/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
+                                                                    {% csrf_token %}
+                                                                    <input type="hidden" name="variantid" id="variantid" value="{{ variant.id }}">
+                                                                    
+                                                                        <div class="qty">
+                                                                            <p class="text-start">Количество</p>
+                                                                            <div class="option-wrapper">
+                                                                                <input class="input" name="quantity" type="number" value="1" min="1" max="{{ variant.quantity }}">
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                        <div class="qty position-relative">
+                                                                            <p class="text-start">В наличии</p>
+                                                                            <div class="option-wrapper border-wrapper position-absolute w-100 d-flex justify-content-start px-2">
+                                                                                <p class="my-auto">{{ variant.quantity }} шт.</p>
+                                                                            </div>
+                                                                        </div>
+                                                            
+                                                                        {% if variant.quantity < 1  %}
+                                                                            <button type="submit" class="danger-btn add-to-cart mt-3">
+                                                                                <i class="fa fa-shopping-cart"></i> Нет в наличии
+                                                                            </button>
+                                                                        {% else %}
+                                                                            <button type="submit" class="primary-btn w-100 add-to-cart mt-3">
+                                                                                <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                                                                            </button>
+                                                                        {% endif %}
+                                                                </form>
+                                                            </div>
+                                                        {% endif %}
+                    
+                                                        {% if  product.variant == 'None' %}
+                                                            <form action="/order/addtoshopcart/{{ product.id }}" method="post"  id="addchart-form">
+                                                                {% csrf_token %}
+                                                                <div id="SelectedProduct">
+                                                                    
+                                                                    <div class="product-options">
+                                                                        {% if product.amount < 1  %}
+                                                                        <button type="submit" class="primary-btn w-100 add-to-cart mt-3">
+                                                                            <i class="fa fa-shopping-cart"></i> Нет в наличии
+                                                                        </button>
+                                                                        {% else %}
+                                                                        <div class="qty mb-3">
+                                                                            <p class="text-start">Количество</p>
+                                                                            <div class="option-wrapper">
+                                                                                <input class="input w-100" name="quantity" type="number" value="1" min="1" max="{{ product.amount }}">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        
+                                                                            <div class="qty">
+                                                                                <p class="text-start">В наличии</p>
+                                                                                <div class="option-wrapper border-wrapper position-absolute w-100 d-flex justify-content-start px-2">
+                                                                                    <p class="my-auto">{{ product.amount }} шт.</p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <button type="submit" class="primary-btn w-100 add-to-cart mt-3">
+                                                                                <i class="fa fa-shopping-cart"></i> Добавить в корзину
+                                                                            </button>
+                                                                        {% endif %}
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                
+                                        <div class="col-12 mt-3">
+                                            <nav id="tab1">
+                                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                    <button class="nav-link active" id="nav-detail-tab" data-bs-toggle="tab" data-bs-target="#nav-detail" type="button" role="tab" aria-controls="nav-detail" aria-selected="true">Описание</button>
+                                                    <button class="nav-link" id="nav-specification-tab" data-bs-toggle="tab" data-bs-target="#nav-specification" type="button" role="tab" aria-controls="nav-specification" aria-selected="false">Характеристики</button>
+                                                    <button class="nav-link" id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review" type="button" role="tab" aria-controls="nav-review" aria-selected="false">Отзывы ({{ product.countreview}})</button>
+                                                </div>
+                                            </nav>
+                                            <div class="tab-content" id="nav-tabContent">
+                                                <div class="tab-pane fade show active" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab">{{ product.detail | safe }}</div>
+                                                <div class="tab-pane fade" id="nav-specification" role="tabpanel" aria-labelledby="nav-specification-tab">
+                                                    <table class="table">
+                                                        <tbody>
+                                                        {% for f_name, f_value in product.get_features.items %}
+                                                            <tr>
+                                                            <th scope="row">{{ f_name }}</th>
+                                                            <td>{{ f_value }}</td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="tab-pane fade" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                            <div class="col-sm-5 col-md-6 col-12 pb-4">
+                                                                {% if product.countreview != 0 %}
+                                                                    {% for rs in comments %}
+                                                                        <div class="comment w-100 mt-4 text-justify float-left"> 
+                                                                            <h4>{{ rs.user.first_name }}</h4> <span>- {{ rs.create_at }}</span> 
+                                                                            <div class="d-inline-flex" style="float:right">
+                                                                                <div class="review-rating pull-right">
+                                                                                    <i class="{% if rs.rate < 1 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                    <i class="{% if rs.rate < 2 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                    <i class="{% if rs.rate < 3 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                    <i class="{% if rs.rate < 4 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                    <i class="{% if rs.rate < 5 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                </div>
+                                                                            </div> 
+                                                                            <p>{{ rs.comment }}</p>             
+                                                                            <p><b>Плюсы:</b> {{ rs.comment_plus }}</p>
+                                                                            <p><b>Минусы:</b> {{ rs.comment_minus }}</p>
+                                                                            
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    <h3>К данному товару нет комментариев. Будьте первым, оставьте свой комментарий</h3>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="col-lg-4 col-md-5 col-sm-4 offset-md-1 offset-sm-1 col-12 mt-4">
+                                                                
+                                                                
+                                                                <!-- Button trigger modal -->
+                                                                <button type="button" class="btn btn-review" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                                    Написать свой отзыв
+                                                                </button>
+                                                                
+                                                                <!-- Modal -->
+                                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLabel">Оставить отзыв</h5>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                ...
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                
+                                                                
+                                                                <form id="align-form" action="/product/addcomment/{{ product.id }}" method="post">
+                                                                    {% csrf_token %}
+                                                                    <h4>Оставьте отзыв</h4>
+                                                                    <textarea name="comment" class="form-control mb-2" rows="4"></textarea>
+                                                                    <textarea name="comment_plus" class="form-control mb-2" rows="2" placeholder="Плюсы"></textarea>
+                                                                    <textarea name="comment_minus" class="form-control" rows="2" placeholder="Минусы"></textarea>
+                                                                    <div class="form-group">
+                                                                        <div class="star-rating"> 
+                                                                            <div class="star-rating__wrap">
+                                                                                <input class="star-rating__input" type="radio" id="star5" name="rate" value="5" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star5"></label>
+                                                                                <input class="star-rating__input" type="radio" id="star4" name="rate" value="4" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star4"></label>
+                                                                                <input class="star-rating__input" type="radio" id="star3" name="rate" value="3" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star3"></label>
+                                                                                <input class="star-rating__input" type="radio" id="star2" name="rate" value="2" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star2"></label>
+                                                                                <input class="star-rating__input" type="radio" id="star1" name="rate" value="1" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star1"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    {% if user.id is not None %}
+                                                                        <button class="primary-btn">Принять</button>
+                                                                    {% else %}
+                                                                        Вы должны авторизироваться, чтобы оставить отзыв.
+                                                                    {% endif %}
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <div class="product-reviews">
+                                                                {% if product.countreview != 0 %}
+                                                                    {% for rs in comments %}
+                                                                        <div class="single-review">
+                                                                            <div class="review-heading">
+                                                                                <div><a href="#"><i class="fa-solid fa-user"></i> {{ rs.user.first_name }}</a></div>
+                                                                                <div class="review-rating pull-right">
+                                                                                    <i class="{% if rs.rate < 1 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                    <i class="{% if rs.rate < 2 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                    <i class="{% if rs.rate < 3 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                    <i class="{% if rs.rate < 4 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                    <i class="{% if rs.rate < 5 %}fa-regular{% else %} fa-solid{% endif %} fa-star star-rating__ico-n"></i>
+                                                                                </div><br>
+                                                                                <div class="pull-right"><a href="#"><i class="fa-solid fa-clock"></i> {{ rs.create_at }}</a></div><br>
+                                                                                
+                                                                            </div>
+                                                                            <div class="review-body">
+                                                                                <p>{{ rs.comment }}</p>
+                                                                                <p><b>Плюсы:</b> {{ rs.comment_plus }}</p>
+                                                                                <p><b>Минусы:</b> {{ rs.comment_minus }}</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    <h3>К данному товару нет комментариев. Будьте первым, оставьте свой комментарий</h3>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6 col-md-12">
+                                                            <h4 class="text-uppercase">Оставьте свой отзыв</h4>
+                                                            <form class="review-form" action="/product/addcomment/{{ product.id }}" method="post">
+                                                                {% csrf_token %}
+                                                                <textarea name="comment" class="form-control" rows="4"></textarea>
+                                                                <textarea name="comment_plus" class="form-control" rows="2" placeholder="Плюсы"></textarea>
+                                                                <textarea name="comment_minus" class="form-control" rows="2" placeholder="Минусы"></textarea>
+                                                                <div class="form-group">
+                                                                    <div class="star-rating"> 
+                                                                        <div class="star-rating__wrap">
+                                                                            <input class="star-rating__input" type="radio" id="star5" name="rate" value="5" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star5"></label>
+                                                                            <input class="star-rating__input" type="radio" id="star4" name="rate" value="4" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star4"></label>
+                                                                            <input class="star-rating__input" type="radio" id="star3" name="rate" value="3" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star3"></label>
+                                                                            <input class="star-rating__input" type="radio" id="star2" name="rate" value="2" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star2"></label>
+                                                                            <input class="star-rating__input" type="radio" id="star1" name="rate" value="1" /><label class="star-rating__ico fa-custom fa-star-o fa-lg" for="star1"></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {% if user.id is not None %}
+                                                                    <button class="primary-btn">Принять</button>
+                                                                {% else %}
+                                                                    Вы должны авторизироваться, чтобы оставить отзыв.
+                                                                {% endif %}
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    <!-- /row -->
+                </div> 
+            </div><!-- /container -->
+        </div> <!-- /container-fluid -->
+    </div><!-- /section -->
+{% endblock %}
+

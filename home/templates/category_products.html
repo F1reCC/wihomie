@@ -1,0 +1,84 @@
+{% extends 'homebase.html' %}
+{% load myapptags %}
+
+{% block title %}{{ catdata.title }} Products{% endblock %}
+{% block description %} {{ catdata.description }} {% endblock %}
+{% block keywords %} {{ category.keywords }} {% endblock %}
+{% block shop_menu %}{% include 'shop_menu.html' %}{% endblock %}
+{% block body %}
+	<!-- section -->
+	<div class="section mt-4">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+
+				<!-- ASIDE -->
+				<div id="aside" class="col-lg-3 col-md-4">	
+                    <form action="{{ category.get_absolute_url }}" method="GET" class="aside">
+                        {{ category | product_spec }}
+                    <p class="text-center">
+                        <button class="btn btn-filter-reset" onclick="clearAll()" type="submit">Сбросить</button>
+                    </p>
+                    </form>
+				</div>
+				<!-- /ASIDE -->
+
+				<!-- MAIN -->
+				<div id="main" class="col-lg-9 col-md-8">
+					<!-- store top filter -->
+					<form action="{{ category.get_absolute_url }}" method="get">
+						<select name="sort" id="sort-list" onchange="this.form.submit();" style="margin-left: auto;">
+							<option value="update_at" id="placeholder" disabled selected hidden>Сортировка</option>
+							<option name="sort" value="price">Цена: По возрастанию</option>
+							<option name="sort" value="-price">Цена: По убыванию</option>
+							<option name="sort" value="create_at">По дате добавления</option>
+						  </select>
+					</form>
+					<!-- /store top filter -->
+					<div class="pull-right">
+						{% include 'pagination_shop.html' %}
+					</div>
+					<!-- STORE -->
+					<div id="store">
+						<!-- row -->
+						<div class="row">
+							{% for rs in category_products %}
+								<div class="col-xl-4 col-lg-6 col-md-6 col-12 mb-3 p-2">
+									<div class="card">
+										<div class="product product-single" style="margin-bottom: 0px !important;">
+											<div class="product-thumb">
+												<a href="{% url 'product_detail' rs.id rs.slug %}" class="main-btn quick-view"><i class="fa fa-search-plus"></i>БЫСТРЫЙ ПРОСМОТР</a>
+												<img src="{{ rs.image.url }}" alt="" class="card-img-top">
+											</div>
+											<div class="card-body" style="height: 100px;">
+												<p class="card-title">{{ rs.title }}</p>
+												<p class="card-title" style="position: absolute !important; bottom: 35px !important; right: 20px;"><b>{{ rs.price }} грн.</b></p>
+											</div>
+											<a href="{% url 'product_detail' rs.id rs.slug %}">
+												<div class="product-btns w-100">
+													<i class="fa fa-shopping-cart"></i>Подробнее
+												</div>
+											</a>
+										</div>									
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+						<!-- /row -->
+					</div>
+					<!-- /STORE -->
+
+					<!-- store bottom filter -->
+					{% include 'pagination_shop.html' %}
+					<!-- /store bottom filter -->
+				</div>
+				<!-- /MAIN -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+{% endblock %}

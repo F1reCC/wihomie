@@ -1,0 +1,158 @@
+{% extends 'homebase.html' %}
+{% block title %} Корзина {% endblock %}
+{% block description %} {{ setting.description }} {% endblock %}
+{% block keywords %} {{ setting.keywords }} {% endblock %}
+
+{% block sidebar %} {% include 'sidebar.html' %} {% endblock %}
+
+{% block body %}
+
+    <!-- BREADCRUMB -->
+    <div aria-label="breadcrumb" class="pt-3">  
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'home' %}">Магазин</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Корзина</li>
+            </ol>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+    <!-- section -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-lg-9 col-md-12">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                {% if total != 0 %}
+                                <h5>Товары в вашей корзине</h5>
+                                {% else %}
+                                <h2>Ваша корзина пуста</h2>
+                                {% endif %}
+                            </div>
+                            {% for rs in shopcart %}
+                                <div class="ibox-content">
+                                    <div class="table-responsive">
+                                        <table class="table shoping-cart-table">
+                                            <tbody>
+                                            <tr>
+                                                <td width="90">
+                                                    <div class="cart-product-imitation">
+                                                        {% if rs.variant.image_id > 0 %}
+                                                            <img class="img-fluid" src="{{rs.variant.image }}" alt="">
+                                                        {% else %}
+                                                            <img class="img-fluid" src="{{rs.product.image.url}}" alt="">
+                                                        {% endif %}
+                                                    </div>
+                                                </td>
+                                                <td class="desc">
+                                                    <h3>
+                                                        {% if rs.product.variant == 'Size' %}
+                                                            <a class="text-navy" href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.size }}</a>
+                                                        {% elif rs.product.variant == 'Color' %}
+                                                            <a class="text-navy" href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.color }}</a>
+                                                        {% elif rs.product.variant == 'Size-Color' %}
+                                                            <a class="text-navy" href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}} {{ rs.variant.size }} {{ rs.variant.color }}</a>
+                                                        {% else %}
+                                                            <a class="text-navy" href="/product/{{ rs.product.id }}/{{ rs.product.slug }}">{{rs.product}}</a>
+                                                        {% endif %}
+                                                    </h3>
+                                                    <p class="small">
+                                                        {{ rs.product.description }}
+                                                    </p>
+                                                    <dl class="small m-b-none">
+                                                        <div class="qty-input d-inline-flex"> 
+                                                            <div>
+                                                                <form action="/order/updateshopcart/{{ rs.product.id }}" method="post">
+                                                                    {% csrf_token %}
+                                                                    <div class="d-flex text-nowrap">
+                                                                    {% if rs.product.variant != None %}
+                                                                        <input type="hidden" name="variantid" id="variantid" value="{{ rs.variant.id }}">
+                                                                        <input type="number" class="form-control" name="quantity" style="width: 80px;" min="1" max="{{ rs.variant.quantity }}" value="{{ rs.quantity }}" onchange="this.form.submit();">
+                                                                    {% else %}
+                                                                        <input type="number" class="form-control" name="quantity" style="width: 80px;" min="1" max="{{ rs.product.quantity }}" value="{{ rs.quantity }}" onchange="this.form.submit();">
+                                                                    {% endif %}
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </dl>
+                
+                                                    <div class="m-t-sm">
+                                                        <a href="/order/deletefromcart/{{ rs.id }}" class="text-muted" onclick="return confirm('Удалить! Вы уверены?')"><i class="fa fa-trash"></i> Удалить товар</a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h4>
+                                                        {{ rs.amount }}
+                                                        
+                                                        грн.
+                                                    </h4>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <div class="ibox-content">
+                                {% if total != 0 %}
+                                    <button class="btn btn-red pull-right"><a href="{% url 'orderproduct' %}" class="text-white"><i class="fa fa fa-shopping-cart"></i> Оформить заказ</a></button>
+                                    <button class="btn btn-white"><a href="{% url 'home' %}"><i class="fa fa-arrow-left"></i>Продолжить покупки</a></button>
+                                {% else %}
+                                    <button class="btn btn-white"><a href="{% url 'home' %}"><i class="fa fa-arrow-left"></i>Вернуться в магазин</a></button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% if total != 0 %}
+                    <div class="col-lg-3 col-md-12">
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Подсчёт корзины</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <span>
+                                    Всего
+                                </span>
+                                <h2 class="font-bold">
+                                    {{ total }} грн.
+                                </h2>
+            
+                                <hr>
+                                <span class="text-muted small">
+                                    *For United States, France and Germany applicable sales tax will be applied
+                                </span>
+                                <div class="m-t-sm">
+                                    <div class="btn-group">
+                                        <a href="{% url 'orderproduct' %}" class="btn btn-red btn-sm text-white"><i class="fa fa-shopping-cart"></i> Оформить заказ</a>
+                                        <a href="{% url 'home' %}" class="btn btn-white btn-sm"> Вернуться</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            
+                        <div class="ibox">
+                            <div class="ibox-title">
+                                <h5>Support</h5>
+                            </div>
+                            <div class="ibox-content text-center">
+                                <h3><i class="fa fa-phone"></i> +43 100 783 001</h3>
+                                <span class="small">
+                                    Please contact with us if you have any questions. We are avalible 24h.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /section -->
+
+{% endblock %}
