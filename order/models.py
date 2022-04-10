@@ -50,7 +50,7 @@ class Order(models.Model):
     )
 
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    code = models.CharField(max_length=5, editable=False )
+    code = models.CharField(max_length=7, editable=False )
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     phone = models.CharField(max_length=10)
