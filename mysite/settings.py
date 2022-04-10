@@ -11,8 +11,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from os import getenv as env
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,7 +27,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '!l3!x0w-(f39+(@*a3a^8p@gf+o66e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = [
+    env('DJANGO_ALLOWED_HOST', default='127.0.0.1')
+]
 
 
 # Application definition
