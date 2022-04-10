@@ -1,6 +1,5 @@
-from msilib.schema import CheckBox
 from django import forms
-from .models import ShopCart, Order
+from .models import Order
 
 PAYING_TYPE_CARD = 'card'
 PAYING_TYPE_COD = 'cod'
